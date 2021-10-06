@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react"
 import { Container, Form, Button, Card, Alert } from "react-bootstrap"
 import { Link, useHistory } from "react-router-dom"
 import { useAuth, SignInMethod } from "../Contexts/AuthContext"
+import  SignInWithGoogle  from "./SignInWithGoogle"
 
 export default function Login() {
     const emailRef = useRef()
@@ -23,7 +24,7 @@ export default function Login() {
             console.log(response);
             if (response == true) {
                 setSuccess(`Success login!`)
-                history.push("/newcomershome")
+   //             history.push("/newcomershome")
             } else {
                 setError("Failed to log in")
             }
@@ -33,50 +34,6 @@ export default function Login() {
         setLoading(false)
 
     }
-
-    async function handleGoogle(googleUser) {
-
-        window.gapi.auth2.getAuthInstance().signOut();
-
-        try {
-            setError("")
-            setSuccess("")
-            setLoading(true)
-            let response = await loginGoogle(googleUser)
-            if (response == true) {
-                setSuccess(`Success login!`)
-                history.push("/newcomershome")
-            } else {
-                console.log(1);
-                setError("Failed to log in")
-            }
-        } catch {
-            console.log(2);
-            setError("Failed to log in")
-        }
-        setLoading(false)
-    }
-
-    useEffect(() => {
-        if (userProfile == undefined) {
-            const clientId = '436064921337-pdu1pag3mte2vqhkpchimks3np46vp94.apps.googleusercontent.com';
-            window.gapi.load('auth2', () => {
-                window.gapi.auth2.init({
-                    client_id: clientId
-                }).then(() => {
-                    window.gapi.signin2.render('my-signIn', {
-                        'scope': 'profile email',
-                        'width': 240,
-                        'height': 40,
-                        'longtitle': false,
-                        'theme': 'dark',
-                        'onsuccess': handleGoogle,
-                        'onfailure': ""
-                    })
-                })
-            })
-        }
-    }, [])
 
     return (
         <>
@@ -101,8 +58,9 @@ export default function Login() {
                     <Card>
                         <Card.Header as="h5">Sign in with</Card.Header>
                         <Card.Body>
-                            {/* <SignIn2/> */}
-                            <div id="my-signIn" />
+
+                            <SignInWithGoogle/>
+
                         </Card.Body>
                     </Card>
                     <div className="d-flex align-items-center justify-content-center">

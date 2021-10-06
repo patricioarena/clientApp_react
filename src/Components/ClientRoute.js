@@ -4,15 +4,16 @@ import { useAuth } from "../Contexts/AuthContext";
 import { UserRole } from '../Repository/UserRole';
 import Logger from '../Logger/Logger';
 
-export default function ClientRoute({ component: Component, ...rest }) {
 
+export default function ClientRoute({ component: Component, ...rest }) {
     const { currentUser, userProfile } = useAuth()
 
-    // Logger(JSON.stringify(userProfile));
+    Logger(userProfile)
+    Logger(currentUser)
+
+    console.log(JSON.stringify(userProfile));
 
     if (userProfile == undefined) {
-
-
         return (
             <Route
                 {...rest}
@@ -27,8 +28,9 @@ export default function ClientRoute({ component: Component, ...rest }) {
                 {...rest}
                 render={props => {
                     // Logger('client router ', JSON.stringify(currentUser))
-                    // Logger('client router userProfile', JSON.stringify(userProfile))
-                    return userProfile.userRole == UserRole.Client ? <Component {...props} /> : <Redirect to='/login' />
+                    Logger('client router userProfile', JSON.stringify(userProfile))
+                    // return userProfile.userRole == UserRole.Client ? <Component {...props} /> : <Redirect to='/login' />
+                    return userProfile == undefined ? <Component {...props} /> : <Redirect to='/login' />
                 }}
             ></Route>
         )

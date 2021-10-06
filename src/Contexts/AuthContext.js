@@ -46,13 +46,66 @@ export function AuthProvider({ children }) {
         //     });
     }
 
+    function sendEmailVerification() { }
 
-    function sendEmailVerification() {
+    function login(email, password) { }
 
-    }
+    function loginGoogle(googleUser) {
 
-    function login(email, password) {
+        const aGoogleUser = googleUser.getAuthResponse();
 
+        const simulateFetchData = () => new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(true);
+            }, 500);
+        })
+
+        return simulateFetchData().then(data => {
+            if (data == true) {
+                console.log("Document data:", data)
+                setCurrentUser(aGoogleUser)
+                setUserProfile(aGoogleUser);
+                setSignInMethod(SignInMethod.Google);
+                setLoading(true)
+
+                if (userProfile != undefined) {
+                    return true;
+                }
+                return true;
+            };
+            return false;
+        })
+
+
+        // var credential = firebase.auth.GoogleAuthProvider.credential(googleUser.getAuthResponse().id_token);
+        // return firebase.auth().signInWithCredential(credential)
+        //     .then(function (result) {
+        //         var user = result.user;
+        //         db.collection('users').doc(user.uid)
+        //             .get()
+        //             .then(function (doc) {
+        //                 if (doc.exists) {
+        //                     // console.log("Document data:", doc.data());
+        //                     setUserProfile(doc.data());
+        //                     setSignInMethod(SignInMethod.Google);
+        //                     setLoading(true)
+        //                     return true;
+        //                 } else {
+        //                     console.log("No user in user collection");
+        //                     window.localStorage.setItem('email', user.email);
+        //                     var newDoc = new UserCredentials(user.uid, user.email, UserRole.Client);
+        //                     return insertIncollection('users', newDoc).then((value) => { return value; });
+        //                 }
+        //             }).catch(function (error) {
+        //                 console.error("Error getting document in user collection:", error);
+        //             });
+
+        //         if (userProfile != undefined) {
+        //             return true;
+        //         }
+        //         return true;
+        //     })
+        // return false;
     }
 
     function signOut() {
@@ -65,6 +118,14 @@ export function AuthProvider({ children }) {
         //         reject(false);
         //     })
         // })
+
+        return new Promise(function (resolve, reject) {
+            setTimeout(() => {
+                resetAll()
+                resolve(true);
+            }, 500);
+        })
+
     }
 
     function resetPassword(email) {
@@ -102,35 +163,14 @@ export function AuthProvider({ children }) {
     }
 
     useEffect(() => {
-        const unsubscribe = firebase.auth().onAuthStateChanged(user => {
-            if (user == null)
-                return;
+         console.log('useEffect');
+         console.log(currentUser);
+         console.log(userProfile);
+         console.log(loading);
+         console.log(signInMethod);
+         console.log('useEffect');
 
-            // levanta el perfil del firestore
-            if (user.emailVerified) {
-                setCurrentUser(user)
-                var docRef = db.collection('users').doc(user.uid);
-                docRef.get()
-                    .then(function (doc) {
-                        if (doc.exists) {
-                            if (mountedRef.current) {
-                                // console.log("Document data:", doc.data())
-                                setUserProfile(doc.data());
-                                setLoading(false)
-                            };
-                        } else {
-                            // console.log("No user in user collection");
-                        }
-                    }).catch(function (error) {
-                        console.error("Error getting document in user collection:", error);
-                    });
-            }
-        });
-        return () => {
-            mountedRef.current = false;
-            unsubscribe();
-        }
-    }, [])
+    },[])
 
     const value = {
         currentUser,
@@ -138,7 +178,7 @@ export function AuthProvider({ children }) {
         insertIncollection,
         login,
         signup,
-        signOutFirebase,
+        signOut,
         resetPassword,
         updateEmail,
         updatePassword,

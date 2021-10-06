@@ -6,24 +6,25 @@ import { useAuth, SignInMethod } from "../Contexts/AuthContext"
 import Logger from '../Logger/Logger';
 
 export default function LoginControl() {
-    const { userProfile, signOutFirebase, signInMethod } = useAuth()
+    const { userProfile, signOut, signInMethod } = useAuth()
     const history = useHistory()
 
     const resetAllx = () => {
-        signOutFirebase().then((value) => {
-            if (value == true) {
-                if (signInMethod == SignInMethod.Google) {
-                    window.gapi.auth2.getAuthInstance().signOut()
-                        .then(() => {
-                            history.push("/newcomershome")
-                        });
-                }
-                history.push("/newcomershome")
-            }
-        });
+        // signOut().then((value) => {
+        //     console.log(value);
+        //     if (value == true) {
+        //         if (signInMethod == SignInMethod.Google) {
+        //             window.gapi.auth2.getAuthInstance().signOut()
+        //                 .then(() => {
+        //                     history.push("/newcomershome")
+        //                 });
+        //         }
+        //         history.push("/newcomershome")
+        //     }
+        // });
     }
 
-    // Logger(userProfile)
+    Logger(userProfile)
     if (userProfile == undefined) {
         return (
             <Link to="/login">

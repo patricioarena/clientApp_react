@@ -40,7 +40,7 @@ function App() {
                   <Route exact path="/" component={NewcomersHome} />
                   <Route path="/newcomershome" component={NewcomersHome} />
                   <ClientRoute path="/clienthome" component={ClientHome} />
-                  <SellerRoute path="/sellerhome" component={SellerHome} />
+                  {/* <SellerRoute path="/sellerhome" component={SellerHome} /> */}
                   <ClientRoute exact path="/product" component={Product} />
                   <ClientRoute path="/product/:id" component={Product} />
                   <ClientRoute path="/about" component={About} />

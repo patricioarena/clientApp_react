@@ -9,6 +9,8 @@ import '../App.css';
 function NewcomersHome() {
     const { currentUser, userProfile } = useAuth()
 
+    console.log(JSON.stringify(userProfile));
+
     return (
         <>
         <Jumbotron fluid>
