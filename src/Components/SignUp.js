@@ -1,13 +1,11 @@
 import React, { useRef, useState } from "react"
 import { Container, Form, Button, Card, Alert } from "react-bootstrap"
-import { useAuth } from "../Contexts/AuthContext"
 import { Link } from "react-router-dom"
 
 const Signup = () => {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
-    const { sendEmailVerification, signup, currentUser } = useAuth()
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
     const [loading, setLoading] = useState(false)
@@ -22,15 +20,15 @@ const Signup = () => {
         setError("")
         setSuccess("")
         setLoading(true)
-        let response = await signup(emailRef.current.value, passwordRef.current.value)
-        if (response === true) {
-            let email = window.localStorage.getItem('email');
-            setSuccess(`Success to create account!\nBefore we get started, please confirm your email address.\n${email}`)
-            sendEmailVerification()
-        } else {
+        // let response = await signup(emailRef.current.value, passwordRef.current.value)
+        // if (response === true) {
+        //     let email = window.localStorage.getItem('email');
+        //     setSuccess(`Success to create account!\nBefore we get started, please confirm your email address.\n${email}`)
+        //     sendEmailVerification()
+        // } else {
 
-            setError("Failed to create account!")
-        }
+        //     setError("Failed to create account!")
+        // }
 
         setLoading(false)
     }

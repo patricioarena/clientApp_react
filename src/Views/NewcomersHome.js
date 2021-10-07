@@ -2,14 +2,14 @@ import React from 'react'
 import { Jumbotron, Container, Card } from "react-bootstrap"
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { useAuth } from "../Contexts/AuthContext"
 import logo from '../logo.svg';
 import '../App.css';
 
-function NewcomersHome() {
-    const { currentUser, userProfile } = useAuth()
+import { useDispatch, useSelector } from 'react-redux'
 
-    console.log(JSON.stringify(userProfile));
+function NewcomersHome() {
+
+    const userProfile = useSelector(store => store.auth.userProfile);
 
     return (
         <>
@@ -28,7 +28,7 @@ function NewcomersHome() {
 
             <Container>
                 <Row className="justify-content-md-center" style={{ paddingTop:'20px'}} >
-                    <Col md="auto">{currentUser && JSON.stringify(currentUser.email)}</Col>
+                    {/* <Col md="auto">{currentUser && JSON.stringify(currentUser.email)}</Col> */}
                     <Col md="auto">{userProfile && JSON.stringify(userProfile)}</Col>
                 </Row>
             </Container>

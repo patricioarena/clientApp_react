@@ -1,61 +1,82 @@
 import React, { useRef, useState, useEffect } from "react"
-import { Link, useHistory } from "react-router-dom"
-import { useAuth, SignInMethod } from "../Contexts/AuthContext"
+import { Button } from "react-bootstrap"
 
-export default function SignInWithGoogle() {
+import { useDispatch, useSelector } from 'react-redux'
+import { actionSignInWithGoogle, actionLogOut, actionReset } from '../redux/reducers/authReducer'
 
-  const { loginGoogle } = useAuth()
-  const [currentUser, setCurrentUser] = useState()
-  const [userProfile, setUserProfile] = useState()
-  const [loading, setLoading] = useState()
-  const [signInMethod, setSignInMethod] = useState()
+const SignInWithGoogle = () => {
+
+  const logOutGoogle = useSelector(store => store.auth.logOutGoogle);
+  const [isSignedIn, setSignedIn] = useState(false)
+  const auth = useRef(null);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     window.gapi.load('auth2', () => {
       window.gapi.auth2.init({
-        client_id: '436064921337-pdu1pag3mte2vqhkpchimks3np46vp94.apps.googleusercontent.com'
+        client_id: '436064921337-pdu1pag3mte2vqhkpchimks3np46vp94.apps.googleusercontent.com',
+        scope: 'profile email',
       }).then(() => {
-        window.gapi.signin2.render('my-signIn', {
-          'scope': 'profile email',
-          'width': 250,
-          'height': 50,
-          'longtitle': false,
-          'theme': 'dark',
-          'onsuccess': onsuccess,
-          'onfailure': onfailure
-        })
+        auth.current = window.gapi.auth2.getAuthInstance();
+        setSignedIn(auth.current.isSignedIn.get());
+        auth.current.isSignedIn.listen(onAuthChange)
       })
     })
-  }, []);
+  }, [isSignedIn]);
 
-  function onsuccess(googleUser) {
-    // e.preventDefault()
-    // const aGoogleUser = googleUser.getAuthResponse();
+  const onAuthChange = () => {
+    setSignedIn(auth.current.isSignedIn.get())
 
-    console.log('onsuccess')
-    // console.log(aGoogleUser);
-    // setCurrentUser(aGoogleUser)
-    // setUserProfile(aGoogleUser);
-    // setSignInMethod(SignInMethod.Google);
-    // setLoading(true)
+    // var token = auth.current.currentUser.get().getAuthResponse();
+    var profile = auth.current.currentUser.get().getBasicProfile();
 
-    // console.log(currentUser);
-
-    loginGoogle(googleUser)
+    if (auth.current.isSignedIn.get() == true) {
+      localStorage.setItem('profile', JSON.stringify(profile))
+      dispatch(actionSignInWithGoogle(profile))
+    }
+    else if (isSignedIn == false) {
+      dispatch(actionLogOut(null))
+    }
+    else {
+      dispatch(actionLogOut(null))
+    }
   }
 
-
-  function onfailure() {
-    console.log('onfailure')
+  const onSignOutClick = () => {
+    auth.current.signOut()
   }
 
-  function returnStates() {
-    console.log('return states');
+  const onSignInClick = () => {
+    auth.current.signIn()
   }
 
-  return (
-    <div id="my-signIn" />
-  )
+  if (logOutGoogle == true) {
+    try {
+      auth.current.signOut()
+      dispatch(actionReset(null))
+    } catch (error) {
+    }
+  }
 
+  if (isSignedIn === null) {
+    return null
+  } else if (isSignedIn) {
+    return (
+      <Button onClick={onSignOutClick} className="w-100">
+        Sign Out
+        <i className="fas fa-sign-in-alt fa-fw" />
+      </Button>
+    )
+  } else {
+    return (
+      <Button onClick={onSignInClick} className="w-100">
+        <i className="fab fa-google fa-fw" />
+        Sign In
+      </Button>
+    )
+  }
 
 }
+
+export default SignInWithGoogle;

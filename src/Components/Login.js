@@ -1,13 +1,13 @@
 import React, { useRef, useState, useEffect } from "react"
 import { Container, Form, Button, Card, Alert } from "react-bootstrap"
 import { Link, useHistory } from "react-router-dom"
-import { useAuth, SignInMethod } from "../Contexts/AuthContext"
+// import { useAuth, SignInMethod } from "../Contexts/AuthContext"
 import  SignInWithGoogle  from "./SignInWithGoogle"
 
 export default function Login() {
     const emailRef = useRef()
     const passwordRef = useRef()
-    const { userProfile, login, loginGoogle, signInMethod } = useAuth()
+    // const { userProfile, login, loginGoogle, signInMethod } = useAuth()
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
     const [loading, setLoading] = useState(false)
@@ -20,14 +20,14 @@ export default function Login() {
             setError("")
             setSuccess("")
             setLoading(true)
-            let response = await login(emailRef.current.value, passwordRef.current.value)
-            console.log(response);
-            if (response == true) {
-                setSuccess(`Success login!`)
-   //             history.push("/newcomershome")
-            } else {
-                setError("Failed to log in")
-            }
+            // let response = await login(emailRef.current.value, passwordRef.current.value)
+//             console.log(response);
+//             if (response == true) {
+//                 setSuccess(`Success login!`)
+//    //             history.push("/newcomershome")
+//             } else {
+//                 setError("Failed to log in")
+//             }
         } catch {
             setError("Failed to log in")
         }

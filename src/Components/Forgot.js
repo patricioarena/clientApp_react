@@ -1,11 +1,9 @@
 import React, { useRef, useState } from "react"
 import { Container, Form, Button, Card, Alert } from "react-bootstrap"
 import { Link } from "react-router-dom"
-import { useAuth } from "../Contexts/AuthContext"
 
 export default function Forgot() {
     const emailRef = useRef()
-    const { resetPassword, currentUser } = useAuth()
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
     const [loading, setLoading] = useState(false)
@@ -18,13 +16,13 @@ export default function Forgot() {
             setError("")
             setSuccess("")
             setLoading(true)
-            let response = await resetPassword(emailRef.current.value)
-            if (response === true) {
-                let email = currentUser.email;
-                setSuccess(`Success reset password!\nBefore we get started, please check your email address. ${email}`)
-            } else {
-                setError("Failed reset password!")
-            }
+            // let response = await resetPassword(emailRef.current.value)
+            // if (response === true) {
+            //     let email = currentUser.email;
+            //     setSuccess(`Success reset password!\nBefore we get started, please check your email address. ${email}`)
+            // } else {
+            //     setError("Failed reset password!")
+            // }
         } catch {
             setError("Failed reset password!")
         }

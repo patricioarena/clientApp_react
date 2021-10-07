@@ -1,10 +1,10 @@
 import React from 'react'
 import { Jumbotron, Container } from "react-bootstrap"
-import { useAuth } from "../Contexts/AuthContext"
+// import { useAuth } from "../Contexts/AuthContext"
 import '../App.css';
 
 function SellerHome() {
-    const { currentUser, userProfile } = useAuth()
+    // const { currentUser, userProfile } = useAuth()
 
     return (
         <>
@@ -19,8 +19,8 @@ function SellerHome() {
             </Jumbotron>
             <div>
                 <p>
-                    {userProfile && JSON.stringify(userProfile)}
-                    {currentUser && JSON.stringify(currentUser.email)}
+                    {/* {userProfile && JSON.stringify(userProfile)}
+                    {currentUser && JSON.stringify(currentUser.email)} */}
                 </p>
             </div>
         </>

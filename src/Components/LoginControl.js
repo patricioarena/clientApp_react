@@ -2,43 +2,31 @@ import React from 'react'
 import { Button } from "react-bootstrap"
 import { Link, useHistory } from 'react-router-dom'
 
-import { useAuth, SignInMethod } from "../Contexts/AuthContext"
-import Logger from '../Logger/Logger';
+import { useDispatch, useSelector } from 'react-redux'
+import { actionLogOut } from '../redux/reducers/authReducer'
 
-export default function LoginControl() {
-    const { userProfile, signOut, signInMethod } = useAuth()
+
+
+const LoginControl = () => {
+
+    const userProfile = useSelector(store => store.auth.userProfile);
     const history = useHistory()
+    const dispatch = useDispatch();
 
-    const resetAllx = () => {
-        // signOut().then((value) => {
-        //     console.log(value);
-        //     if (value == true) {
-        //         if (signInMethod == SignInMethod.Google) {
-        //             window.gapi.auth2.getAuthInstance().signOut()
-        //                 .then(() => {
-        //                     history.push("/newcomershome")
-        //                 });
-        //         }
-        //         history.push("/newcomershome")
-        //     }
-        // });
-    }
 
-    Logger(userProfile)
-    if (userProfile == undefined) {
+    if (userProfile == null) {
         return (
             <Link to="/login">
-                <Button className="w-100">Log In</Button>
+                <Button className="w-100" onClick={  console.log('=>>') }>Sign In</Button>
             </Link>
         )
     } else {
             return (
-                <Button className="w-100" onClick={resetAllx}>Log Out</Button>
+                <Button className="w-100" onClick={ ()=>{dispatch(actionLogOut(null))} }>Sign Out</Button>
             )
         }
 
 
-
 }
 
-
+export default LoginControl;
