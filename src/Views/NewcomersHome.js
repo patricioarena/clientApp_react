@@ -5,11 +5,11 @@ import Col from 'react-bootstrap/Col'
 import logo from '../logo.svg';
 import '../App.css';
 
-import { useDispatch, useSelector } from 'react-redux'
+// import { useDispatch, useSelector } from 'react-redux'
 
 function NewcomersHome() {
 
-    const userProfile = useSelector(store => store.auth.userProfile);
+    // const userProfile = useSelector(store => store.auth.userProfile);
 
     return (
         <>
@@ -29,7 +29,7 @@ function NewcomersHome() {
             <Container>
                 <Row className="justify-content-md-center" style={{ paddingTop:'20px'}} >
                     {/* <Col md="auto">{currentUser && JSON.stringify(currentUser.email)}</Col> */}
-                    <Col md="auto">{userProfile && JSON.stringify(userProfile)}</Col>
+                    {/* <Col md="auto">{userProfile && JSON.stringify(userProfile)}</Col> */}
                 </Row>
             </Container>
 

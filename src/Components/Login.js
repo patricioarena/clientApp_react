@@ -1,13 +1,15 @@
 import React, { useRef, useState, useEffect } from "react"
 import { Container, Form, Button, Card, Alert } from "react-bootstrap"
 import { Link, useHistory } from "react-router-dom"
-// import { useAuth, SignInMethod } from "../Contexts/AuthContext"
+import { AuthContext, SignInMethod } from "../Contexts/AuthContext"
 import  SignInWithGoogle  from "./SignInWithGoogle"
 
 export default function Login() {
     const emailRef = useRef()
     const passwordRef = useRef()
-    // const { userProfile, login, loginGoogle, signInMethod } = useAuth()
+
+    const { userProfile } = AuthContext()
+
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
     const [loading, setLoading] = useState(false)
@@ -37,11 +39,14 @@ export default function Login() {
 
     return (
         <>
+        <div md="auto">{userProfile && JSON.stringify(userProfile)}</div>
             <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }} >
                 <div className="w-100" style={{ maxWidth: "400px" }}>
                     <Card>
                         <Card.Header as="h5">Log in</Card.Header>
                         <Card.Body>
+
+
                             {error && <Alert variant="danger">{error}</Alert>}
                             {success && <Alert variant="success">{success}</Alert>}
                             <Form onSubmit={handleSubmit}>

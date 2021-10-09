@@ -1,16 +1,14 @@
 import React, { useRef, useState, useEffect } from "react"
 import { Button } from "react-bootstrap"
-
-import { useDispatch, useSelector } from 'react-redux'
-import { actionSignInWithGoogle, actionLogOut, actionReset } from '../redux/reducers/authReducer'
+import { AuthContext, SignInMethod } from "../Contexts/AuthContext"
+import StatesOfApplicacion from '../StatesOfApplication'
 
 const SignInWithGoogle = () => {
 
-  const logOutGoogle = useSelector(store => store.auth.logOutGoogle);
+  const { saveProfile, removeProfile, saveSignInMethod, signInMethod } = AuthContext()
   const [isSignedIn, setSignedIn] = useState(false)
-  const auth = useRef(null);
 
-  const dispatch = useDispatch();
+  const auth = useRef(null);
 
   useEffect(() => {
     window.gapi.load('auth2', () => {
@@ -31,15 +29,18 @@ const SignInWithGoogle = () => {
     // var token = auth.current.currentUser.get().getAuthResponse();
     var profile = auth.current.currentUser.get().getBasicProfile();
 
+    //SignIn
     if (auth.current.isSignedIn.get() == true) {
-      localStorage.setItem('profile', JSON.stringify(profile))
-      dispatch(actionSignInWithGoogle(profile))
+      saveSignInMethod(SignInMethod.Google)
+      saveProfile(profile)
     }
     else if (isSignedIn == false) {
-      dispatch(actionLogOut(null))
+      //SignOut
+      removeProfile()
     }
     else {
-      dispatch(actionLogOut(null))
+      //SignOut
+      removeProfile()
     }
   }
 
@@ -51,30 +52,50 @@ const SignInWithGoogle = () => {
     auth.current.signIn()
   }
 
-  if (logOutGoogle == true) {
+// limpiar signingoolge cuando clickean el signout superior estando en la vista login
+  if (window.localStorage.getItem(StatesOfApplicacion.signOutGoogle1Key) == StatesOfApplicacion.signOutGoogle1Value) {
     try {
       auth.current.signOut()
-      dispatch(actionReset(null))
+      window.localStorage.removeItem(StatesOfApplicacion.signOutGoogle1Key)
+    } catch (error) {
+    }
+    window.localStorage.removeItem(StatesOfApplicacion.signOutGoogle1Key)
+  }
+
+// limpiar signingoolge cuando clickean el signout superior no estando en la vista login
+  if (window.localStorage.getItem(StatesOfApplicacion.signOutGoogle2Key) == StatesOfApplicacion.signOutGoogle1Value) {
+    try {
+      auth.current.signOut()
+      window.localStorage.removeItem(StatesOfApplicacion.signOutGoogle2Key)
     } catch (error) {
     }
   }
 
-  if (isSignedIn === null) {
-    return null
-  } else if (isSignedIn) {
+
+   const renderSignOutButton = () => {
     return (
       <Button onClick={onSignOutClick} className="w-100">
         Sign Out
         <i className="fas fa-sign-in-alt fa-fw" />
       </Button>
     )
-  } else {
+  }
+
+  const renderSignInButton = () => {
     return (
       <Button onClick={onSignInClick} className="w-100">
         <i className="fab fa-google fa-fw" />
         Sign In
       </Button>
     )
+  }
+
+  if (isSignedIn === null) {
+    return null
+  } else if (isSignedIn) {
+    return renderSignOutButton()
+  } else {
+    return renderSignInButton()
   }
 
 }
