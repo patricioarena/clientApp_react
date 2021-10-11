@@ -10,7 +10,6 @@ export class UserCredentials {
         email,
         telephoneNumber,
         reputation,
-        email,
         address
     ) {
         this._idRole = _idRole;
@@ -23,7 +22,6 @@ export class UserCredentials {
         this.email = email;
         this.telephoneNumber = telephoneNumber;
         this.reputation = reputation;
-        this.email = email;
         this.address = address;
     }
 

@@ -2,29 +2,46 @@ import React from 'react'
 import { Button } from "react-bootstrap"
 import { Link, useHistory } from 'react-router-dom'
 
-import { useDispatch, useSelector } from 'react-redux'
-import { actionLogOut } from '../redux/reducers/authReducer'
-
-
+import { AuthContext, SignInMethod } from "../Contexts/AuthContext"
+import StatesOfApplicacion from '../StatesOfApplication'
 
 const LoginControl = () => {
 
-    const userProfile = useSelector(store => store.auth.userProfile);
+
+    const { userProfile, signInMethod, removeProfile } = AuthContext()
+
+    // console.log(userProfile);
+
     const history = useHistory()
-    const dispatch = useDispatch();
 
 
-    if (userProfile == null) {
+
+    const renderSignOutGoogleButton = () => {
         return (
             <Link to="/login">
-                <Button className="w-100" onClick={  console.log('=>>') }>Sign In</Button>
+                <Button className="w-100" onClick={() => {
+                    removeProfile();
+                    window.localStorage.setItem(StatesOfApplicacion.signOutGoogle2Key, StatesOfApplicacion.signOutGoogle2Value)
+                }}>Sign Out</Button>
             </Link>
         )
+    }
+
+    const renderSignInGoogleButton = () => {
+        return (
+            <Link to="/login">
+                <Button className="w-100" onClick={
+                    window.localStorage.setItem(StatesOfApplicacion.signOutGoogle1Key, StatesOfApplicacion.signOutGoogle1Value)
+                }>Sign In</Button>
+            </Link>
+        )
+    }
+
+    if (userProfile == null && signInMethod === SignInMethod.Google) {
+        return renderSignInGoogleButton()
     } else {
-            return (
-                <Button className="w-100" onClick={ ()=>{dispatch(actionLogOut(null))} }>Sign Out</Button>
-            )
-        }
+        return renderSignOutGoogleButton()
+    }
 
 
 }

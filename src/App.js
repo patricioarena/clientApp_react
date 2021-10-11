@@ -1,6 +1,10 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
 import './App.css';
+
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { AuthProvider } from '../src/Contexts/AuthContext';
+
+// import { Provider } from 'react-redux'
+// import generateStore from './redux/store'
 
 import Header from './Components/Header';
 import Aside from './Components/Aside'
@@ -9,8 +13,6 @@ import Footer from './Components/Footer';
 import Signup from './Components/SignUp';
 import Login from './Components/Login'
 import Forgot from './Components/Forgot'
-// import SellerRoute from "./Components/SellerRoute";
-// import ClientRoute from "./Components/ClientRoute";
 import EnviromentCustom from "./Components/Enviroment";
 
 import NewcomersHome from './Views/NewcomersHome';
@@ -19,22 +21,11 @@ import SellerHome from './Views/SellerHome';
 import About from './Views/About'
 import Product from './Views/Product'
 
-import { Provider } from 'react-redux'
-import generateStore from './redux/store'
-
-
-// counterReducer(0, actionIncrement)
-// counterReducer(1, actionDecrement)
-// counterReducer(10, actionReset)
-
-
 function App() {
-
-  const store = generateStore()
 
   return (
     <div>
-      <Provider store={store}>
+        <AuthProvider>
         <Router>
           <Nav />
           <EnviromentCustom />
@@ -65,9 +56,10 @@ function App() {
           </div>
           <Footer />
         </Router>
-      </Provider>
+        </AuthProvider>
     </div>
   );
+
 }
 
 export default App;
