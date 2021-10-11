@@ -8,7 +8,7 @@ import StatesOfApplicacion from '../StatesOfApplication'
 const LoginControl = () => {
 
 
-    const { userToken, signInMethod, removeToken } = AuthContext()
+    const { userToken, removeToken, signInMethod} = AuthContext()
 
     // console.log(userToken);
 
@@ -18,7 +18,7 @@ const LoginControl = () => {
     const renderSignInDefault = () => {
         return (
             <Link to="/login">
-                <Button className="w-100" onClick={ () => {}}>Sign In</Button>
+                <Button className="w-100" onClick={() => { }}>Sign In</Button>
             </Link>
         )
     }
@@ -44,16 +44,20 @@ const LoginControl = () => {
         )
     }
 
-    if (userToken == null && signInMethod == null) {
-        return renderSignInDefault();
+    const renderGoogleButtons = () => {
+        if (userToken == null) {
+            return renderSignInGoogleButton()
+        } else {
+            return renderSignOutGoogleButton()
+        }
     }
 
-    if (userToken == null && signInMethod === SignInMethod.Google) {
-        return renderSignInGoogleButton()
-    } else {
-        return renderSignOutGoogleButton()
+    switch (signInMethod) {
+        case SignInMethod.Google:
+            return renderGoogleButtons();
+        default:
+            return renderSignInDefault();
     }
-
 
 }
 
