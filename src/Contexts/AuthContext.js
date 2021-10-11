@@ -25,27 +25,27 @@ export function AuthContext() {
 
 export function AuthProvider({ children }) {
 
-    const [userProfile, setUserProfile] = useState(null)
+    const [userToken, setUserToken] = useState(null)
     const [signInMethod, setSignInMethod] = useState(null)
 
 
     useEffect(() => {
         try {
-            var userInLocalStorage = window.localStorage.getItem(StatesOfApplicacion.userProfile)
-            setUserProfile(JSON.parse(userInLocalStorage))
+            var userTokenInLocalStorage = window.localStorage.getItem(StatesOfApplicacion.userToken)
+            setUserToken(JSON.parse(userTokenInLocalStorage))
         } catch (error) {
             console.error(error);
         }
     }, [])
 
-    const saveProfile = (profile) => {
-        setUserProfile(profile);
-        window.localStorage.setItem(StatesOfApplicacion.userProfile, JSON.stringify(profile))
+    const saveToken = (token) => {
+        setUserToken(token);
+        window.localStorage.setItem(StatesOfApplicacion.userToken, JSON.stringify(token))
     }
 
-    const removeProfile = () => {
-        setUserProfile(null);
-        window.localStorage.removeItem(StatesOfApplicacion.userProfile)
+    const removeToken = () => {
+        setUserToken(null);
+        window.localStorage.removeItem(StatesOfApplicacion.userToken)
         window.localStorage.removeItem(StatesOfApplicacion.signOutGoogle1Key)
     }
 
@@ -54,10 +54,10 @@ export function AuthProvider({ children }) {
     }
 
     const value = {
-        userProfile,
+        userToken,
         signInMethod,
-        saveProfile,
-        removeProfile,
+        saveToken,
+        removeToken,
         saveSignInMethod
     }
 

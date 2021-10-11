@@ -8,19 +8,26 @@ import StatesOfApplicacion from '../StatesOfApplication'
 const LoginControl = () => {
 
 
-    const { userProfile, signInMethod, removeProfile } = AuthContext()
+    const { userToken, signInMethod, removeToken } = AuthContext()
 
-    // console.log(userProfile);
+    // console.log(userToken);
 
     const history = useHistory()
 
 
+    const renderSignInDefault = () => {
+        return (
+            <Link to="/login">
+                <Button className="w-100" onClick={ () => {}}>Sign In</Button>
+            </Link>
+        )
+    }
 
     const renderSignOutGoogleButton = () => {
         return (
             <Link to="/login">
                 <Button className="w-100" onClick={() => {
-                    removeProfile();
+                    removeToken();
                     window.localStorage.setItem(StatesOfApplicacion.signOutGoogle2Key, StatesOfApplicacion.signOutGoogle2Value)
                 }}>Sign Out</Button>
             </Link>
@@ -37,7 +44,11 @@ const LoginControl = () => {
         )
     }
 
-    if (userProfile == null && signInMethod === SignInMethod.Google) {
+    if (userToken == null && signInMethod == null) {
+        return renderSignInDefault();
+    }
+
+    if (userToken == null && signInMethod === SignInMethod.Google) {
         return renderSignInGoogleButton()
     } else {
         return renderSignOutGoogleButton()

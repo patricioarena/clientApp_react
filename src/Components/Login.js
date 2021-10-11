@@ -2,13 +2,13 @@ import React, { useRef, useState, useEffect } from "react"
 import { Container, Form, Button, Card, Alert } from "react-bootstrap"
 import { Link, useHistory } from "react-router-dom"
 import { AuthContext, SignInMethod } from "../Contexts/AuthContext"
-import  SignInWithGoogle  from "./SignInWithGoogle"
+import SignInWithGoogle from "./SignInWithGoogle"
 
 export default function Login() {
     const emailRef = useRef()
     const passwordRef = useRef()
 
-    const { userProfile } = AuthContext()
+    const { userToken } = AuthContext()
 
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
@@ -23,13 +23,13 @@ export default function Login() {
             setSuccess("")
             setLoading(true)
             // let response = await login(emailRef.current.value, passwordRef.current.value)
-//             console.log(response);
-//             if (response == true) {
-//                 setSuccess(`Success login!`)
-//    //             history.push("/newcomershome")
-//             } else {
-//                 setError("Failed to log in")
-//             }
+            //             console.log(response);
+            //             if (response == true) {
+            //                 setSuccess(`Success login!`)
+            //    //             history.push("/newcomershome")
+            //             } else {
+            //                 setError("Failed to log in")
+            //             }
         } catch {
             setError("Failed to log in")
         }
@@ -39,7 +39,7 @@ export default function Login() {
 
     return (
         <>
-        <div md="auto">{userProfile && JSON.stringify(userProfile)}</div>
+            <div md="auto">{userToken && JSON.stringify(userToken)}</div>
             <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }} >
                 <div className="w-100" style={{ maxWidth: "400px" }}>
                     <Card>
@@ -64,7 +64,7 @@ export default function Login() {
                         <Card.Header as="h5">Sign in with</Card.Header>
                         <Card.Body>
 
-                            <SignInWithGoogle/>
+                            <SignInWithGoogle />
 
                         </Card.Body>
                     </Card>

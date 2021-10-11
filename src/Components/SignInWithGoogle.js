@@ -5,7 +5,7 @@ import StatesOfApplicacion from '../StatesOfApplication'
 
 const SignInWithGoogle = () => {
 
-  const { saveProfile, removeProfile, saveSignInMethod, signInMethod } = AuthContext()
+  const { saveToken, removeToken, saveSignInMethod, signInMethod } = AuthContext()
   const [isSignedIn, setSignedIn] = useState(false)
 
   const auth = useRef(null);
@@ -26,21 +26,21 @@ const SignInWithGoogle = () => {
   const onAuthChange = () => {
     setSignedIn(auth.current.isSignedIn.get())
 
-    // var token = auth.current.currentUser.get().getAuthResponse();
-    var profile = auth.current.currentUser.get().getBasicProfile();
+    var token = auth.current.currentUser.get().getAuthResponse();
+    // var profile = auth.current.currentUser.get().getBasicProfile();
 
     //SignIn
     if (auth.current.isSignedIn.get() == true) {
       saveSignInMethod(SignInMethod.Google)
-      saveProfile(profile)
+      saveToken(token)
     }
     else if (isSignedIn == false) {
       //SignOut
-      removeProfile()
+      removeToken()
     }
     else {
       //SignOut
-      removeProfile()
+      removeToken()
     }
   }
 
@@ -52,7 +52,7 @@ const SignInWithGoogle = () => {
     auth.current.signIn()
   }
 
-// limpiar signingoolge cuando clickean el signout superior estando en la vista login
+  // limpiar signingoolge cuando clickean el signout superior estando en la vista login
   if (window.localStorage.getItem(StatesOfApplicacion.signOutGoogle1Key) == StatesOfApplicacion.signOutGoogle1Value) {
     try {
       auth.current.signOut()
@@ -62,7 +62,7 @@ const SignInWithGoogle = () => {
     window.localStorage.removeItem(StatesOfApplicacion.signOutGoogle1Key)
   }
 
-// limpiar signingoolge cuando clickean el signout superior no estando en la vista login
+  // limpiar signingoolge cuando clickean el signout superior no estando en la vista login
   if (window.localStorage.getItem(StatesOfApplicacion.signOutGoogle2Key) == StatesOfApplicacion.signOutGoogle1Value) {
     try {
       auth.current.signOut()
@@ -72,7 +72,7 @@ const SignInWithGoogle = () => {
   }
 
 
-   const renderSignOutButton = () => {
+  const renderSignOutButton = () => {
     return (
       <Button onClick={onSignOutClick} className="w-100">
         Sign Out

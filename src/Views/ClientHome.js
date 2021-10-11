@@ -4,7 +4,7 @@ import { Jumbotron, Container } from "react-bootstrap"
 import '../App.css';
 
 function ClientHome() {
-    // const { currentUser, userProfile } = useAuth()
+    // const { currentUser, userToken } = useAuth()
 
     return (
         <>
@@ -14,12 +14,12 @@ function ClientHome() {
                     <p>
                         This is a modified jumbotron that occupies the entire horizontal space of
                         its parent.
-                </p>
+                    </p>
                 </Container>
             </Jumbotron>
             <div>
                 <p>
-                    {/* {userProfile && JSON.stringify(userProfile)}
+                    {/* {userToken && JSON.stringify(userToken)}
                     {currentUser && JSON.stringify(currentUser.email)} */}
                 </p>
             </div>

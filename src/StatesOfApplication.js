@@ -1,5 +1,5 @@
 const StatesOfApplicacion = {
-    userProfile: 'userProfile',
+    userToken: 'userToken',
     signInMethod: 'signInMethod',
     signOutGoogle1Key: 'signOutGoogle1',
     signOutGoogle1Value: 'true',
