@@ -10,7 +10,11 @@ const LoginControl = () => {
 
     const { userToken, removeToken, signInMethod} = AuthContext()
 
-    // console.log(userToken);
+    console.log(userToken);
+    console.log('================');
+    // console.log(signInMethod);
+    console.log(userToken);
+
 
     const history = useHistory()
 

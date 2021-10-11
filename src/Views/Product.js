@@ -1,9 +1,14 @@
 import React from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { AuthContext, SignInMethod } from "../Contexts/AuthContext"
+
+
 
 const Product = () => {
 
-    const [apidata, setEquipo] = React.useState({
+const { userToken, removeToken, signInMethod} = AuthContext()
+
+const [apidata, setEquipo] = React.useState({
         loading: false,
         data:[]
     })
@@ -30,7 +35,10 @@ const Product = () => {
         if (id)
             url = `${url}?id=${id}`
 
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            headers: {Authentication: `Bearer ${userToken}`}
+          });
+
         try
         {
             const jsonresponse = await response.json();

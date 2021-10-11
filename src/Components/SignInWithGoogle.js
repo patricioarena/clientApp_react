@@ -26,7 +26,7 @@ const SignInWithGoogle = () => {
   const onAuthChange = () => {
     setSignedIn(auth.current.isSignedIn.get())
 
-    var token = auth.current.currentUser.get().getAuthResponse();
+    var token = auth.current.currentUser.get().getAuthResponse().id_token;
     // var profile = auth.current.currentUser.get().getBasicProfile();
 
     //SignIn

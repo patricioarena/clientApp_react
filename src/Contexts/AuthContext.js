@@ -32,6 +32,9 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         try {
             var userTokenInLocalStorage = window.localStorage.getItem(StatesOfApplicacion.userToken)
+            var userSignInMethod = window.localStorage.getItem(StatesOfApplicacion.signInMethod)
+
+            setSignInMethod(JSON.parse(userSignInMethod))
             setUserToken(JSON.parse(userTokenInLocalStorage))
         } catch (error) {
             console.error(error);
@@ -46,11 +49,14 @@ export function AuthProvider({ children }) {
     const removeToken = () => {
         setUserToken(null);
         window.localStorage.removeItem(StatesOfApplicacion.userToken)
+        window.localStorage.removeItem(StatesOfApplicacion.signInMethod)
         window.localStorage.removeItem(StatesOfApplicacion.signOutGoogle1Key)
+
     }
 
     const saveSignInMethod = (signInMethod) => {
         setSignInMethod(signInMethod);
+        window.localStorage.setItem(StatesOfApplicacion.signInMethod, JSON.stringify(signInMethod))
     }
 
     const value = {
