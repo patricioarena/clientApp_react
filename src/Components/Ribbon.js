@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react"
 
-function EnviromentCustom() {
+function Ribbon() {
 
   const [node_env, setEnv] = useState(process.env.NODE_ENV)
   window.process = node_env
@@ -15,4 +15,4 @@ function EnviromentCustom() {
 
 }
 
-export default EnviromentCustom
+export default Ribbon
