@@ -5,11 +5,7 @@ import Col from 'react-bootstrap/Col'
 import logo from '../logo.svg';
 import '../App.css';
 
-// import { useDispatch, useSelector } from 'react-redux'
-
 function NewcomersHome() {
-
-    // const userToken = useSelector(store => store.auth.userToken);
 
     return (
         <>
