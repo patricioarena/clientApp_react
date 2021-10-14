@@ -15,5 +15,6 @@
 }
 
 .ql-editor {
-  min-height: 18em;
+  height: 9em;
+  max-height: 9em;
 }

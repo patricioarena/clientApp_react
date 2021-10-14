@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Row, Col } from "react-bootstrap"
 import { FormContext } from "../Contexts/FormContext"
-
-import QuillEditor from './QuillEditor/QuillEditor';
+import Form from "../Components/Form/Form"
 
 import '../App.css';
 
@@ -12,20 +11,11 @@ const ClientHome = () => {
 
     const { stateEditor } = FormContext()
 
-
-    const { stateText } = QuillEditor()
-
-    const onChangeHandler = (props) => {
-        console.log(props);
-
-    }
-
-    function createMarkup() {
-        return { __html: `${stateEditor}` };
-    }
-
+ 
     return (
         <>
+                        {/* <div dangerouslySetInnerHTML={createMarkup()} /> */}
+
             <Jumbotron fluid>
                 <Container>
                     <h1>Client Home.</h1>
@@ -36,23 +26,13 @@ const ClientHome = () => {
                 </Container>
             </Jumbotron>
 
-            <Container>
-                <Row>
-                    <Col >
-                        <QuillEditor />
-                    </Col>
+            <Container fluid>
 
-                    <Col style={{
-                            'width': '90%',
-                            'max-width': '90%',
-                            backgroundColor: 'white'
-                            }}>
-                        <div dangerouslySetInnerHTML={createMarkup()} />
-                    </Col>
-                </Row>
+                    <Form/>
+
+
+
             </Container>
-
-
 
 
         </>

@@ -10,10 +10,16 @@ export function FormContext() {
 export function FormProvider({ children }) {
 
     const [stateEditor, setStateEditor] = useState("")
+    const [stateCalendar, setStateCalendar] = useState("")
+    const [stateSelect, setStateSelect] = useState("")
 
     const value = {
         stateEditor,
-        setStateEditor
+        stateCalendar,
+        stateSelect,
+        setStateEditor,
+        setStateCalendar,
+        setStateSelect
     }
 
     return (

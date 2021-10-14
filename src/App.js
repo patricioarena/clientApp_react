@@ -5,13 +5,12 @@ import { AuthProvider } from '../src/Contexts/AuthContext';
 import { FormProvider } from './Contexts/FormContext';
 
 import Header from './Components/Header';
-// import Aside from './Components/Aside'
 import Nav from './Components/Nav'
 import Footer from './Components/Footer';
 import Signup from './Components/SignUp';
 import Login from './Components/Login'
 import Forgot from './Components/Forgot'
-import Ribbon from "./Components/Ribbon";
+import Ribbon from "./Components/Ribbon/Ribbon";
 import NewcomersHome from './Components/NewcomersHome';
 import ClientHome from './Components/ClientHome';
 import SellerHome from './Components/SellerHome';
@@ -29,7 +28,6 @@ function App() {
             <Ribbon />
             <div className="content-wrapper">
               <Header />
-              {/* <Aside /> */}
               <div className="content">
                 <div className="container">
 
