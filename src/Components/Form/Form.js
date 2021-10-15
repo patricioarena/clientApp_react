@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Jumbotron, Container, Row, Col } from "react-bootstrap"
-import { FormContext } from "../../Contexts/FormContext"
 
 import QuillEditor from '../QuillEditor/QuillEditor';
+import JobPreview from '../JobPreview/JobPreview';
 import Calendar from '../Calendar/Calendar';
 import Select from '../Select/Select';
 
-
-
 export const Form = () => {
-    const { stateEditor } = FormContext()
 
-    const [stateSelected, setStateSelected] = useState(null);
-    const [stateCalendar, setStateCalendar] = useState(null);
+    const em = "(Vista Previa)"
+    const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </br> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    const worklists = [ 'Seleción', 'Plomería', 'Gas', 'Albañileria', 'Pintura', 'Jardineria' ]
 
+    const [stateSelected, setStateSelected] = useState("");
+    const [stateCalendar, setStateCalendar] = useState("");
+    const [stateEditorText, setStateEditorText] = useState(text);
 
     const handleChangeSelect = (event) => {
         {
@@ -23,15 +23,16 @@ export const Form = () => {
         }
     };
 
+    const handleChangeEditorText = (event) => {
+        setStateEditorText(event);
+    };
 
-    // Pasar al componente Vista Previa
-    const stateEditorInnerHTML = () => {
-        return { __html: `${stateEditor}` };
-    }
+    const handleChangeCalendar = (event) => {
+        setStateCalendar(event);
+    };
 
-    // Pasar al componente Vista Previa
-    const stateSelectInnerHTML = () => {
-        return { __html: `${stateSelected}` };
+    const returnStates = () => {
+        return [stateSelected, stateCalendar, stateEditorText]
     }
 
     return (
@@ -43,34 +44,35 @@ export const Form = () => {
                         <div className="card-header">
                             <h3 className="card-title">General Elements</h3>
                         </div>
-                        {/* /.card-header */}
                         <div className="card-body">
                             <form>
                                 <div className="row">
-
-                                <div className="col-sm-6">
-                                        <div className="form-group">
-                                            <label>Trabajo a realizar</label>
-                                            <Select onChange={event => handleChangeSelect(event.target.value)} value="pepe"/>
-                                        </div>
-                                    </div>
-
                                     <div className="col-sm-6">
                                         <div className="form-group">
-                                            <label>Date:</label>
-                                            <div className="input-group date" id="reservationdate" data-target-input="nearest">
-                                                <Calendar onChange ={setStateCalendar} value={stateCalendar}/>
-                                            </div>
+                                            <label>Trabajo a realizar</label>
+                                            <Select
+                                                onChange={event => handleChangeSelect(event.target.value)}
+                                                collection = {worklists} />
                                         </div>
                                     </div>
 
-
+                                    <div className="col-sm-6" style={{paddingLeft:'34px'}}>
+                                        <div className="form-group">
+                                            <label>Date:</label>
+                                                <Calendar
+                                                    onChange={event => handleChangeCalendar(event)}
+                                                    value={stateCalendar} />
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div className="row">
                                     <div className="col-sm-12">
                                         <div className="form-group">
-                                            <QuillEditor placeholder={"Descripción del trabajo"} />
+                                            <QuillEditor
+                                                onChange={event => handleChangeEditorText(event)}
+                                                placeholder={"Descripción del trabajo"}
+                                                value={stateEditorText} />
                                         </div>
                                     </div>
                                 </div>
@@ -80,34 +82,11 @@ export const Form = () => {
                     </div>
                 </div>
 
-                {/* Pasar al componente Vista Previa */}
-                <div className="col-md-6">
-                    <div className="card">
-                        <div className="card-header">
-                            <h3 className="card-title">
-                                <i className="fas fa-briefcase" />
-                                &nbsp;<a dangerouslySetInnerHTML={stateSelectInnerHTML()} />&nbsp;
-                                <em>(Vista Previa)</em>
-                            </h3>
-                        </div>
-                        {/* /.card-header */}
-                        <div className="card-body">
-                            <dl className="row">
-
-                                <dt className="col-sm-4">Descripción</dt>
-                                <dd className="col-sm-12" dangerouslySetInnerHTML={stateEditorInnerHTML()} />
-                                <dt className="col-sm-4">Tipo</dt>
-                                <dd className="col-sm-10">Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</dd>
-                                <dd className="col-sm-8 offset-sm-4">Donec id elit non mi porta gravida at eget metus.</dd>
-                                <dt className="col-sm-4">Malesuada porta</dt>
-                                <dd className="col-sm-8">Etiam porta sem malesuada magna mollis euismod.</dd>
-
-                            </dl>
-                        </div>
-                        {/* /.card-body */}
-                    </div>
-                    {/* /.card */}
-                </div>
+                <JobPreview
+                    description={stateEditorText}
+                    title={stateSelected}
+                    date={stateCalendar}
+                    em={em}/>
             </div>
         </>
     )

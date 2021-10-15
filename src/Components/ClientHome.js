@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Row, Col } from "react-bootstrap"
-import { FormContext } from "../Contexts/FormContext"
 import Form from "../Components/Form/Form"
 
 import '../App.css';
 
-
-
 const ClientHome = () => {
 
-    const { stateEditor } = FormContext()
 
- 
     return (
         <>
-                        {/* <div dangerouslySetInnerHTML={createMarkup()} /> */}
-
             <Jumbotron fluid>
                 <Container>
                     <h1>Client Home.</h1>
@@ -27,13 +20,8 @@ const ClientHome = () => {
             </Jumbotron>
 
             <Container fluid>
-
-                    <Form/>
-
-
-
+                <Form/>
             </Container>
-
 
         </>
     )
