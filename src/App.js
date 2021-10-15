@@ -2,7 +2,6 @@ import './App.css';
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { AuthProvider } from '../src/Contexts/AuthContext';
-import { FormProvider } from './Contexts/FormContext';
 
 import Header from './Components/Header';
 import Nav from './Components/Nav'
@@ -22,7 +21,6 @@ function App() {
   return (
     <div>
       <AuthProvider>
-        <FormProvider>
           <Router>
             <Nav />
             <Ribbon />
@@ -49,7 +47,6 @@ function App() {
             </div>
             <Footer />
           </Router>
-        </FormProvider>
       </AuthProvider>
     </div>
   );

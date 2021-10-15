@@ -33,7 +33,6 @@ const [loading, setLoading] = useState(true)
         setData(jsonresponse.results);
         setLoading(false);
 
-        console.log(jsonresponse);
     }
 
     if (loading)
@@ -47,8 +46,8 @@ const [loading, setLoading] = useState(true)
                     {
                         apidata.map(
                             item => (
-                                <li key={item.id}>
-                                    <Link to={`${item.id}`}>{item.id} - {item.url}</Link>
+                                <li key={item.name}>
+                                    <Link to={{ pathname: `${item.url}` }} target="_blank"> {item.id} {item.url}</Link>
                                 </li>
                             )
                         )

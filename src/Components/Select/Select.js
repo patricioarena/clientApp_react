@@ -2,17 +2,12 @@ import React, { useState } from "react";
 
 const Select = (props) => {
 
-    console.log(props.value);
-
     return (
         <>
             <select className="form-control" onChange={props.onChange}>
-                <option>Seleción</option>
-                <option>Plomería</option>
-                <option>Gas</option>
-                <option>Albañileria</option>
-                <option>Pintura</option>
-                <option>Jardineria</option>
+                {
+                    props.collection.map(item => (<option key={item}>{item}</option>))
+                }
             </select>
         </>
     );

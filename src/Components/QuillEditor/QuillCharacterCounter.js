@@ -1,7 +1,10 @@
 import ReactQuill, {Quill} from "react-quill";
 
-export default class Counter {
+export default class CharacterCounter {
   constructor(quill, options) {
+
+    console.log(options.container);
+
     this.quill = quill;
     this.options = options;
     this.container = document.querySelector(options.container);

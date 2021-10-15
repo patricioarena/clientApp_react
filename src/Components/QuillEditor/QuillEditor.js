@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import ReactQuill, { Quill } from "react-quill";
-import { FormContext } from "../../Contexts/FormContext"
 
-import Counter from "./QuillCounter";
+import CharacterCounter from "./QuillCharacterCounter";
 import CharacterLimiter from "./QuillCharacterLimiter";
 
 import "react-quill/dist/quill.snow.css";
@@ -10,21 +9,12 @@ import "./QuillEditor.css";
 
 export const QuillEditor = (props) => {
 
-  Quill.register('modules/counter', Counter);
+  Quill.register('modules/characterCounter', CharacterCounter);
   Quill.register('modules/characterLimiter', CharacterLimiter);
-
-
-  const [stateText, setStateText] = useState(null);
-  const { setStateEditor } = FormContext()
 
   const reactQuillRef = useRef();
 
-  const handleChange = value => {
-    setStateText(value);
-    setStateEditor(value)
-  };
-
-  /*
+ /*
  * Quill modules to attach to editor
  * See https://quilljs.com/docs/modules/ for complete options
  */
@@ -32,8 +22,8 @@ export const QuillEditor = (props) => {
     characterLimiter: {
       max: 500
     },
-    counter: {
-      container: '#counter',
+    characterCounter: {
+      container: '#ql-counter',
       unit: 'character'
     },
     toolbar: [
@@ -60,26 +50,22 @@ export const QuillEditor = (props) => {
     'link', 'image', 'video'
   ]
 
-  const renderQuillEditor = () => {
-    return (
+  return (
       <>
         <div className="text-editor">
           <ReactQuill
             theme="snow"
-            onChange={handleChange}
+            onChange={props.onChange}
             placeholder={props.placeholder}
+            value={props.value}
             ref={reactQuillRef}
-            value={stateText}
             modules={modules}
             formats={formats}
           />
         </div>
-        <div id="counter">0</div>
+        <div id="ql-counter" className="ql-counter">0</div>
       </>
     );
-  }
-
-  return renderQuillEditor();
 
 };
 
