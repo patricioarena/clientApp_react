@@ -5,11 +5,11 @@ import JobPreview from '../JobPreview/JobPreview';
 import Calendar from '../Calendar/Calendar';
 import Select from '../Select/Select';
 
+
 export const Form = () => {
 
-    const em = "(Vista Previa)"
     const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </br> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    const worklists = [ 'Seleción', 'Plomería', 'Gas', 'Albañileria', 'Pintura', 'Jardineria' ]
+    const worklists = ['Seleción', 'Plomería', 'Gas', 'Albañileria', 'Pintura', 'Jardineria']
 
     const [stateSelected, setStateSelected] = useState("");
     const [stateCalendar, setStateCalendar] = useState("");
@@ -31,37 +31,37 @@ export const Form = () => {
         setStateCalendar(event);
     };
 
-    const returnStates = () => {
-        return [stateSelected, stateCalendar, stateEditorText]
-    }
-
     return (
         <>
             <div className="row">
 
-                <div className="col-md-6">
+                <div className="col-md">
                     <div className="card card-warning">
                         <div className="card-header">
-                            <h3 className="card-title">General Elements</h3>
+                            <h3 className="card-title">
+                            <i className="fas fa-edit" />
+                            &nbsp;&nbsp;<a>Crear publicación</a>
+                            </h3>
                         </div>
                         <div className="card-body">
                             <form>
+
                                 <div className="row">
-                                    <div className="col-sm-6">
+                                    <div className="col-sm-4">
+                                        <label>Trabajo a realizar</label>
                                         <div className="form-group">
-                                            <label>Trabajo a realizar</label>
                                             <Select
                                                 onChange={event => handleChangeSelect(event.target.value)}
-                                                collection = {worklists} />
+                                                collection={worklists} />
                                         </div>
                                     </div>
 
-                                    <div className="col-sm-6" style={{paddingLeft:'34px'}}>
+                                    <div className="col-sm-4"  >
+                                        <label>Fecha a realizar</label>
                                         <div className="form-group">
-                                            <label>Date:</label>
-                                                <Calendar
-                                                    onChange={event => handleChangeCalendar(event)}
-                                                    value={stateCalendar} />
+                                            <Calendar
+                                                onChange={event => handleChangeCalendar(event)}
+                                                value={stateCalendar} />
                                         </div>
                                     </div>
                                 </div>
@@ -82,12 +82,18 @@ export const Form = () => {
                     </div>
                 </div>
 
+            </div>
+            <div className="row">
+
                 <JobPreview
                     description={stateEditorText}
                     title={stateSelected}
                     date={stateCalendar}
-                    em={em}/>
+                    preview={true} />
+                    
             </div>
+
+
         </>
     )
 }

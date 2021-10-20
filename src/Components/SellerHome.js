@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container } from "react-bootstrap"
-// import { useAuth } from "../Contexts/AuthContext"
-import '../App.css';
+
+
+import Map from '../Components/Map/Map';
+
 
 function SellerHome() {
-    // const { currentUser, userToken } = useAuth()
+
+    const zoom = 16
+    const center = [51.505, -0.09]
+
+
 
     return (
         <>
-            <Jumbotron fluid>
+            {/* <Jumbotron fluid>
                 <Container>
                     <h1>Seller Home.</h1>
                     <p>
@@ -16,13 +22,19 @@ function SellerHome() {
                         its parent.
                     </p>
                 </Container>
-            </Jumbotron>
-            <div>
-                <p>
-                    {/* {userToken && JSON.stringify(userToken)}
-                    {currentUser && JSON.stringify(currentUser.email)} */}
-                </p>
-            </div>
+            </Jumbotron> */}
+
+
+
+
+            <Map
+                center={center}
+                zoom={zoom}
+                activeMarker={true}
+                activeArea={false}
+                activeSearch={true}
+            />
+
         </>
     )
 }
