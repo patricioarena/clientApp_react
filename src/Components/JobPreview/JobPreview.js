@@ -81,7 +81,10 @@ export const JobPreview = (props) => {
                                         display: 'contents'
                                     }}>
 
-
+                                    {
+                                        console.log(props)
+                                    }
+                                    
                                     <Map
                                         centerMap={props.centerMap}
                                         activeMarker={false}
