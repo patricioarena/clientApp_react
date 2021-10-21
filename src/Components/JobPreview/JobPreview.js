@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Map from '../Map/Map';
 
 export const JobPreview = (props) => {
 
@@ -58,7 +59,7 @@ export const JobPreview = (props) => {
 
                                 <div className="card-body">
                                     <blockquote style={{
-                                         backgroundColor: '#eaecec69'
+                                        backgroundColor: '#eaecec69'
                                     }}>
                                         <p>Una vez aceptada la oferta se mostraran datos de contacto y ubicacion especifica del trabajo.</p>
                                     </blockquote>
@@ -81,10 +82,14 @@ export const JobPreview = (props) => {
                                     }}>
 
 
-                                    {/* Pasar a componente */}
-                                    <div className="" id='map'>
-                                        <img src="https://i.stack.imgur.com/OznGR.png" alt="Photo 3" className="img-fluid" />
-                                    </div>
+                                    <Map
+                                        centerMap={props.centerMap}
+                                        activeMarker={false}
+                                        activeArea={true}
+                                        activeSearch={false}
+                                        activeSavePosition={false}
+                                    />
+
                                 </div>
 
                             </div>

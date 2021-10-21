@@ -7,7 +7,6 @@ import Map from '../Components/Map/Map';
 
 function SellerHome() {
 
-    const zoom = 16
     const center = [51.505, -0.09]
 
 
@@ -24,15 +23,12 @@ function SellerHome() {
                 </Container>
             </Jumbotron> */}
 
-
-
-
             <Map
-                center={center}
-                zoom={zoom}
+                centerMap={center}
                 activeMarker={true}
                 activeArea={false}
                 activeSearch={true}
+                activeSavePosition={true}
             />
 
         </>

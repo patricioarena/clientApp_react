@@ -3,7 +3,6 @@ import { MapContainer, TileLayer, Marker, Popup, LayerGroup, Circle, useMap } fr
 import { Marker as LeafletMarker, icon } from 'leaflet'
 
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
-
 import { Button } from 'react-bootstrap';
 
 import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
@@ -68,7 +67,7 @@ const InfluenceArea = (props) => {
         <Circle
             center={position}
             pathOptions={fillBlueOptions}
-            radius={300} />
+            radius={200} />
     )
 }
 
@@ -89,35 +88,35 @@ const SearchControl = (props) => {
     return null;
 };
 
-// export const DisplayPosition = ({ map }) => {
+export const SavePosition = ({ map }) => {
 
-//     const onClick = useCallback(() => {
-//         center = [map.getCenter().lat, map.getCenter().lng]
-//         console.log(center);
-//     }, [map])
+    const onClick = useCallback(() => {
+        let center = [map.getCenter().lat, map.getCenter().lng]
+        console.log(center);
+    }, [map])
 
-
-//     return (
-//         <>
-//             <Button onClick={onClick}>Guardar mapa</Button>
-//         </>
-//     )
-// }
+    return (
+        <>
+            <Button onClick={onClick}>Save map</Button>
+        </>
+    )
+}
 
 export const Map = (props) => {
 
-    const zoom = props.zoom
-    const center = props.center
+    const center = props.centerMap
     const provider = new OpenStreetMapProvider();
 
-    //  const displayMap = useMemo(() => (
+    const [map, setMap] = useState(null)
 
-    const displayMap = () => {
-        return (
+    const displayMap = useMemo(
+        () => (
             <>
-                <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} editable={true}>
+                <MapContainer center={center} zoom={16} scrollWheelZoom={false} whenCreated={setMap}>
 
-                    <TileLayer attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+                    <TileLayer
+                        maxZoom='20'
+                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
                     {
@@ -148,30 +147,28 @@ export const Map = (props) => {
                                 marker={Marker} />
                             : <></>
                     }
-
-                <Button
-                        className=" "
-                    >polygon</Button>
-
-
-
                 </MapContainer>
+            </>
+        ),
+        [],
+    )
+
+
+    if(props.activeSavePosition){
+    return (
+        <>
+            {map ? <SavePosition map={map}  /> : null}
+            {displayMap}
+        </>
+    )
+    }else{
+        return (
+            <>
+                {displayMap}
             </>
         )
     }
 
-    // ),
-    //     [],
-    // )
-
-    // return (
-    //     <>
-    //         {map ? <DisplayPosition map={map} /> : null}
-    //         {displayMap}
-    //     </>
-    // )
-
-    return displayMap()
 };
 
 
