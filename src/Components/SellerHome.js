@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Jumbotron, Container } from "react-bootstrap"
+import { Jumbotron, Container, Button } from "react-bootstrap"
 
 
 import Map from '../Components/Map/Map';
@@ -7,9 +7,12 @@ import Map from '../Components/Map/Map';
 
 function SellerHome() {
 
-    const center = [51.505, -0.09]
+    const centerMap = [51.505, -0.09]
+    const [state, setState] = useState()
 
-
+    const handleTest = () => {
+        console.log(state);
+    }
 
     return (
         <>
@@ -23,13 +26,23 @@ function SellerHome() {
                 </Container>
             </Jumbotron> */}
 
-            <Map
-                centerMap={center}
-                activeMarker={true}
-                activeArea={false}
-                activeSearch={true}
-                activeSavePosition={true}
-            />
+            <Button onClick={ handleTest } > Click Here</Button>
+
+            <div>{state}</div>
+
+            <Container style={{ height: '50em',
+                            width: '50em'}}>
+                <Map
+                    centerMap={centerMap}
+                    activeMarker={true}
+                    activeArea={true}
+                    activeSearch={true}
+                    activeSavePosition={true}
+                    style={{ 'width': '8em' }}
+                    setState = {setState} // Con esta propiedad se puede setear desde el boton Save Map el centro a un estado externo al componente Map
+                />
+
+            </Container>
 
         </>
     )

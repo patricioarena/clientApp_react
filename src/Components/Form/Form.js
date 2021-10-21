@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Jumbotron, Container, Button } from "react-bootstrap"
 
 import QuillEditor from '../QuillEditor/QuillEditor';
 import JobPreview from '../JobPreview/JobPreview';
 import Calendar from '../Calendar/Calendar';
 import Select from '../Select/Select';
+import Map from '../Map/Map';
 
 
 export const Form = () => {
@@ -12,6 +14,7 @@ export const Form = () => {
     const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </br> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     const worklists = ['Seleción', 'Plomería', 'Gas', 'Albañileria', 'Pintura', 'Jardineria']
 
+    const [stateMap, setStateMap] = useState(centerMap)
     const [stateSelected, setStateSelected] = useState("");
     const [stateCalendar, setStateCalendar] = useState("");
     const [stateEditorText, setStateEditorText] = useState(text);
@@ -32,6 +35,13 @@ export const Form = () => {
         setStateCalendar(event);
     };
 
+    const handleSaveMapCoordinate = (event) => {
+        console.log(event);
+        setStateMap(event);
+    };
+
+
+
     return (
         <>
             <div className="row">
@@ -40,8 +50,8 @@ export const Form = () => {
                     <div className="card card-warning">
                         <div className="card-header">
                             <h3 className="card-title">
-                            <i className="fas fa-edit" />
-                            &nbsp;&nbsp;<a>Crear publicación</a>
+                                <i className="fas fa-edit" />
+                                &nbsp;&nbsp;<a>Crear publicación</a>
                             </h3>
                         </div>
                         <div className="card-body">
@@ -83,6 +93,41 @@ export const Form = () => {
                     </div>
                 </div>
 
+
+
+                <div className="col-md">
+                    <div className="card card-warning">
+                        <div className="card-header">
+                            <h3 className="card-title">
+                                <i className="fas fa-edit" />
+                                &nbsp;&nbsp;<a>Crear publicación</a>
+                            </h3>
+                        </div>
+                        <div className="card-body">
+                            <Container style={{
+                                width: '30em',
+                                height: '19em'
+                            }}>
+                                <Map
+                                    centerMap={stateMap}
+                                    activeMarker={true}
+                                    activeArea={true}
+                                    activeSearch={true}
+                                    activeSavePosition={true}
+                                    style={{ 'width': '8em' }}
+                                    saveCoordinate={handleSaveMapCoordinate} // Con esta propiedad se puede setear desde el boton Save Map el centro a un estado externo al componente Map
+                                />
+
+                            </Container>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
             </div>
             <div className="row">
 
@@ -91,7 +136,7 @@ export const Form = () => {
                     title={stateSelected}
                     date={stateCalendar}
                     preview={true}
-                    centerMap={centerMap}/>
+                    centerMap={stateMap} />
 
             </div>
 

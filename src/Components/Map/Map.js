@@ -88,11 +88,11 @@ const SearchControl = (props) => {
     return null;
 };
 
-export const SavePosition = ({ map }) => {
-
+export const SavePosition = ({ map, saveCoordinate }) => {
     const onClick = useCallback(() => {
         let center = [map.getCenter().lat, map.getCenter().lng]
-        console.log(center);
+        saveCoordinate(center);
+        // console.log(center);
     }, [map])
 
     return (
@@ -102,8 +102,15 @@ export const SavePosition = ({ map }) => {
     )
 }
 
+const ChangeMap = ({ center, zoom }) => {
+    const map = useMap();
+    map.setView(center, zoom);
+    return null;
+  }
+
 export const Map = (props) => {
 
+    const zoom = 16;
     const center = props.centerMap
     const provider = new OpenStreetMapProvider();
 
@@ -112,7 +119,9 @@ export const Map = (props) => {
     const displayMap = useMemo(
         () => (
             <>
-                <MapContainer center={center} zoom={16} scrollWheelZoom={false} whenCreated={setMap}>
+                <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} whenCreated={setMap} >
+
+                <ChangeMap center={center} zoom={zoom} />
 
                     <TileLayer
                         maxZoom='20'
@@ -157,7 +166,7 @@ export const Map = (props) => {
     if(props.activeSavePosition){
     return (
         <>
-            {map ? <SavePosition map={map}  /> : null}
+            {map ? <SavePosition map={map} saveCoordinate = {props.saveCoordinate} /> : null}
             {displayMap}
         </>
     )
