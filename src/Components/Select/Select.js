@@ -6,7 +6,7 @@ const Select = (props) => {
         <>
             <select className="form-control" onChange={props.onChange}>
                 {
-                    props.collection.map(item => (<option key={item}>{item}</option>))
+                    props.collection.map(item => (<option key={item._id}>{item.jobName}</option>))
                 }
             </select>
         </>

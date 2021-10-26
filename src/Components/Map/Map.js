@@ -92,7 +92,7 @@ export const SavePosition = ({ map, saveCoordinate }) => {
     const onClick = useCallback(() => {
         let center = [map.getCenter().lat, map.getCenter().lng]
         saveCoordinate(center);
-        // console.log(center);
+        //console.log(center);
     }, [map])
 
     return (
@@ -101,12 +101,6 @@ export const SavePosition = ({ map, saveCoordinate }) => {
         </>
     )
 }
-
-const ChangeMap = ({ center, zoom }) => {
-    const map = useMap();
-    map.setView(center, zoom);
-    return null;
-  }
 
 export const Map = (props) => {
 
@@ -119,9 +113,12 @@ export const Map = (props) => {
     const displayMap = useMemo(
         () => (
             <>
-                <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} whenCreated={setMap} >
-
-                <ChangeMap center={center} zoom={zoom} />
+                <MapContainer
+                    center={center}
+                    zoom={zoom}
+                    scrollWheelZoom={false}
+                    whenCreated={setMap}
+                    >
 
                     <TileLayer
                         maxZoom='20'
@@ -156,6 +153,7 @@ export const Map = (props) => {
                                 marker={Marker} />
                             : <></>
                     }
+
                 </MapContainer>
             </>
         ),

@@ -1,5 +1,7 @@
+import { Jumbotron, Container, Button, InputGroup, FormControl } from "react-bootstrap"
 import React, { useState, useEffect } from 'react';
 import Map from '../Map/Map';
+
 
 export const JobPreview = (props) => {
 
@@ -28,6 +30,34 @@ export const JobPreview = (props) => {
             </>
         )
     }
+
+    //////////////////////////Refresh////////////////////////////
+    // How to re-render after state is changed in react js?
+    // https://stackoverflow.com/questions/59408235/how-to-re-render-after-state-is-changed-in-react-js
+
+    // How to manually trigger click event in ReactJS?
+    // https://stackoverflow.com/questions/39913863/how-to-manually-trigger-click-event-in-reactjs
+
+    // How can I force a component to re-render with hooks in React?
+    // https://stackoverflow.com/questions/53215285/how-can-i-force-a-component-to-re-render-with-hooks-in-react
+
+    // How to rerender component in useEffect Hook
+    // https://stackoverflow.com/questions/58015602/how-to-rerender-component-in-useeffect-hook
+
+    const [flag, setFlag] = useState({ 1: false, 2: false });
+
+    useEffect(() => {
+        refresh(1); //children function of interest
+      }, [props.refresh]);
+
+    const refresh = (id) => {
+      var newFlag = Object.assign({}, flag);
+      newFlag[id] = !flag[id];
+      setFlag(newFlag);
+      console.log("after" + JSON.stringify(flag));
+      console.log(flag === newFlag);
+    };
+    /////////////////////////Refresh/////////////////////////////
 
     // https://react-leaflet.js.org/docs/example-other-layers/
     // https://github.com/smeijer/leaflet-geosearch
@@ -81,17 +111,34 @@ export const JobPreview = (props) => {
                                         display: 'contents'
                                     }}>
 
-                                    {
-                                        console.log(props)
-                                    }
-                                    
-                                    <Map
-                                        centerMap={props.centerMap}
-                                        activeMarker={false}
-                                        activeArea={true}
-                                        activeSearch={false}
-                                        activeSavePosition={false}
-                                    />
+
+
+                                        {
+
+                                        flag[1]
+                                            ? <Map
+                                                centerMap={props.centerMap}
+                                                activeMarker={false}
+                                                activeArea={true}
+                                                activeSearch={false}
+                                                activeSavePosition={false}
+                                                />
+                                            : null
+                                        }
+
+                                        {
+                                        flag[1]
+                                            ? null
+                                            : <Map
+                                                centerMap={props.centerMap}
+                                                activeMarker={false}
+                                                activeArea={true}
+                                                activeSearch={false}
+                                                activeSavePosition={false}
+                                            />
+                                        }
+
+
 
                                 </div>
 
