@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react"
+import './Ribbon.css';
 
 function Ribbon() {
 
@@ -6,9 +7,11 @@ function Ribbon() {
   window.process = node_env
 
   return (
-    <div className="ribbon-box">
-      <div className="ribbon-corner">{node_env}</div>
-      <div className="ribbon-text"></div>
+
+    <div className="ribbon-wrapper ribbon-xl ribbon-bo2x">
+      <div className="ribbon bg-warning text-lg">
+      {node_env}
+      </div>
     </div>
 
   )

@@ -9,11 +9,20 @@
 
 .ql-container {
   width: 100% !important;
-  border-bottom-left-radius: 0.5em;
-  border-bottom-right-radius: 0.5em;
   background: #fefcfc;
 }
 
 .ql-editor {
-  min-height: 18em;
+  height: 9em;
+  max-height: 9em;
+}
+
+.ql-counter{
+  text-align: center;
+  font-size: 0.8em;
+  border-left: 1px solid #ced4da;
+  border-right: 1px solid #ced4da;
+  border-bottom: 1px solid #ced4da;
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
 }

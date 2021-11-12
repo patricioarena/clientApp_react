@@ -1,31 +1,36 @@
-import React, { useState } from 'react'
-import ReactQuill from "react-quill";
-import { FormContext } from "../../Contexts/FormContext"
+import React, { useState, useEffect, useRef } from 'react'
+import ReactQuill, { Quill } from "react-quill";
+
+import CharacterCounter from "./QuillCharacterCounter";
+import CharacterLimiter from "./QuillCharacterLimiter";
 
 import "react-quill/dist/quill.snow.css";
 import "./QuillEditor.css";
 
-export const QuillEditor = () => {
-  const [stateText, setStateText] = useState({ value: null });
-  const { setStateEditor } = FormContext()
+export const QuillEditor = (props) => {
 
-  const handleChange = value => {
-    setStateText({ value });
-    setStateEditor(value)
-  };
+  Quill.register('modules/characterCounter', CharacterCounter);
+  Quill.register('modules/characterLimiter', CharacterLimiter);
 
-  /*
+  const reactQuillRef = useRef();
+
+ /*
  * Quill modules to attach to editor
  * See https://quilljs.com/docs/modules/ for complete options
  */
   const modules = {
+    characterLimiter: {
+      max: 500
+    },
+    characterCounter: {
+      container: '#ql-counter',
+      unit: 'character'
+    },
     toolbar: [
       [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-      [{ size: [] }],
       ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [{ 'list': 'ordered' }, { 'list': 'bullet' },
-      { 'indent': '-1' }, { 'indent': '+1' }],
-      ['link', 'image', 'video'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+      [{ size: [] }],
       ['clean']
     ],
     clipboard: {
@@ -45,23 +50,22 @@ export const QuillEditor = () => {
     'link', 'image', 'video'
   ]
 
-  const renderQuillEditor = () => {
-    return (
-      <div className="text-editor">
-        {/* <EditorToolbar /> */}
-        <ReactQuill
-          theme="snow"
-          value={stateText.value}
-          onChange={handleChange}
-          placeholder={"Write something awesome..."}
-          modules={modules}
-          formats={formats}
-        />
-      </div>
+  return (
+      <>
+        <div className="text-editor">
+          <ReactQuill
+            theme="snow"
+            onChange={props.onChange}
+            placeholder={props.placeholder}
+            value={props.value}
+            ref={reactQuillRef}
+            modules={modules}
+            formats={formats}
+          />
+        </div>
+        <div id="ql-counter" className="ql-counter">0</div>
+      </>
     );
-  }
-
-  return renderQuillEditor();
 
 };
 

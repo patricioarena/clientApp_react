@@ -1,14 +1,22 @@
-import React from 'react'
-import { Jumbotron, Container } from "react-bootstrap"
-// import { useAuth } from "../Contexts/AuthContext"
-import '../App.css';
+import React, { useState, useEffect } from 'react';
+import { Jumbotron, Container, Button } from "react-bootstrap"
+
+
+import Map from '../Components/Map/Map';
+
 
 function SellerHome() {
-    // const { currentUser, userToken } = useAuth()
+
+    const centerMap = [51.505, -0.09]
+    const [state, setState] = useState()
+
+    const handleTest = () => {
+        console.log(state);
+    }
 
     return (
         <>
-            <Jumbotron fluid>
+            {/* <Jumbotron fluid>
                 <Container>
                     <h1>Seller Home.</h1>
                     <p>
@@ -16,13 +24,26 @@ function SellerHome() {
                         its parent.
                     </p>
                 </Container>
-            </Jumbotron>
-            <div>
-                <p>
-                    {/* {userToken && JSON.stringify(userToken)}
-                    {currentUser && JSON.stringify(currentUser.email)} */}
-                </p>
-            </div>
+            </Jumbotron> */}
+
+            <Button onClick={ handleTest } > Click Here</Button>
+
+            <div>{state}</div>
+
+            <Container style={{ height: '50em',
+                            width: '50em'}}>
+                <Map
+                    centerMap={centerMap}
+                    activeMarker={true}
+                    activeArea={true}
+                    activeSearch={true}
+                    activeSavePosition={true}
+                    style={{ 'width': '8em' }}
+                    setState = {setState} // Con esta propiedad se puede setear desde el boton Save Map el centro a un estado externo al componente Map
+                />
+
+            </Container>
+
         </>
     )
 }
