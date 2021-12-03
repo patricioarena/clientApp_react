@@ -9,36 +9,11 @@ import Calendar from '../Calendar/Calendar';
 import Select from '../Select/Select';
 import Map from '../Map/Map';
 
-// const RefreshExample = (props, ref) => {
-//     const [flag, setFlag] = useState({ 1: false, 2: false });
-
-//     useEffect(() => {
-//         refresh(1); //children function of interest
-//       }, [props.refresh]);
-
-//     const refresh = (id) => {
-//       var newFlag = Object.assign({}, flag);
-//       newFlag[id] = !flag[id];
-//       setFlag(newFlag);
-//       console.log("after" + JSON.stringify(flag));
-//       console.log(flag === newFlag);
-//     };
-
-//     return (
-//       <div>
-//         {flag[1] ? (
-//           <p>this is true{JSON.stringify(flag[1])} </p>
-//         ) : (
-//           <p>this is false {JSON.stringify(flag[1])} </p>
-//         )}
-//       </div>
-//     );
-//   }
+import  Requirement from '../Models/Requirement';
+import  Address from '../Models/Address';
 
 
 export const Form = () => {
-
-    const url = "http://localhost:8080/api/typeJob/getAll";
 
     const centerMap = [51.505, -0.09]
     const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </br> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
@@ -52,28 +27,24 @@ export const Form = () => {
             "_id": "6164c64bf6733464c61bdc67",
             "jobName": "Gasista",
             "deleted": false
-        },
-        {
-            "_id": "6164c6e9c5849c62ecc3a07c",
-            "jobName": "Plomero",
-            "deleted": false
-        },
-        {
-            "_id": "6164c78eaaffc063e59d6201",
-            "jobName": "Electricista",
-            "deleted": false
-        },
-        {
-            "_id": "6164ca9f471d7f459b5b6cf9",
-            "jobName": "Jardinero",
-            "deleted": false
-        },
-        {
-            "_id": "6164d528c763b46ac01f62ef",
-            "jobName": "Podador",
-            "deleted": false
         }
     ];
+
+    const requientsStatus = [
+        {
+          "_id": "618f0e28b5658f18666def83",
+          "status": "Open"
+        },
+        {
+          "_id": "618f0e35b5658f18666def84",
+          "status": "Close"
+        },
+        {
+          "_id": "618f29edf8f454434147f2b3",
+          "status": "Canceled"
+        }
+      ];
+
 
     const [stateMap, setStateMap] = useState(centerMap)
     const [stateSelected, setStateSelected] = useState("");
@@ -124,12 +95,17 @@ export const Form = () => {
         // setProvState(userPerfil.address.provState);
         // setCountry(userPerfil.address.country);
 
-        // getWorkLists();
+        try {
+            getWorkLists();
+        } catch (error) {
+            console.log(error);
+            console.log("se cargo el worklist por defector");
+        }
 
     }, [])
 
     const getWorkLists = async () => {
-
+        const url = "http://localhost:8090/api/typeJob/getAll";
         const response = await fetch(url, {
             // headers: {Authentication: `Bearer ${userToken}`}
         });
@@ -137,8 +113,57 @@ export const Form = () => {
         const jsonresponse = await response.json();
         // console.log(jsonresponse.data);
         setStateWorklists(jsonresponse.data)
+    }
+
+    const setRequirements = async () => {
+        var jobId = worklists.filter(job => job.jobName == stateSelected);
+        let coordinates;
+
+        var temp = new Requirement();
+        temp._idRequestPerson = "617638887e4fff79d6ec72a8"
+        temp._idTypeJob = jobId[0]._id
+        temp._idRequirementStatus = "618f0e28b5658f18666def83"
+        temp.address = new Address(
+            street,
+            number,
+            zipCode,
+            city,
+            provState,
+            country,
+            coordinates = {
+                lat:  stateMap[0],
+                long: stateMap[1]
+            }
+        )
+        temp.date = `${stateCalendar.year}-${stateCalendar.month}-${stateCalendar.day}`
+        temp.description= stateEditorText
+        temp.zone = zipCode
+
+        const url = "http://localhost:8090/api/requirement/create";
+        const response = await fetch(url, {
+            // headers: {Authentication: `Bearer ${userToken}`}
+            method: "POST",
+            body: JSON.stringify(temp),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        });
+
+        const jsonresponse = await response.json();
+        console.log(jsonresponse.data);
+
+        // console.log(stateSelected)
+        // console.log(stateCalendar)
+        // console.log(stateEditorText)
+        // console.log(street)
+        // console.log(number)
+        // console.log(zipCode)
+        // console.log(city)
+        // console.log(provState)
+        // console.log(country)
+        // console.log(coordinates);
+        // console.log(temp);
 
     }
+
 
     return (
         <>
@@ -155,7 +180,7 @@ export const Form = () => {
 
                             </div>
                             <div className="col">
-                                <Button> Publicar </Button>
+                                <Button onClick={event => setRequirements()}> Publicar </Button>
                             </div>
                         </div>
 
